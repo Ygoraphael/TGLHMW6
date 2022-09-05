@@ -1,0 +1,1 @@
+docker-compose -p FOOTBAL up -d 

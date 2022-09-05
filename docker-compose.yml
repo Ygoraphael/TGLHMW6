@@ -1,0 +1,15 @@
+services: 
+    sql-server-db:
+        container_name: Football-SqlServer
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+            - "1434:1434"
+        environment:
+            MSSQL_SA_PASSWORD: "Password123!"
+            ACCEPT_EULA: "Y"
+    redis:
+        container_name: Football-redis
+        image: "redis:alpine"
+        command: redis-server --requirepass fIbfYgOvdXwHTZCDod5oVy2A1Ih0WRHLvhbLG9QQ
+        ports:
+        - "6379:6379"
