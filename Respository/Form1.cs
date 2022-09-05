@@ -10,21 +10,43 @@ namespace Respository
 {
     public partial class Form1 : Form
     {
-        public const string ConectionSqlServer = "Server=localhost,1433;Database=master;User ID=sa;Password=Password123!;Integrated Security=false;TrustServerCertificate=true;";
+        
+        public const string ConectionSqlServer = "Server=localhost,1433;Database=master;User ID=sa;Password=Password123!;Integrated Security=false;TrustServerCertificate=true;MultipleActiveResultSets=True";
         //EntityFramework
+        public List<Team> Teams = new List<Team>();
+        public List<Player> Players = new List<Player>();
         public AppDbContext DbContext;
+        public TeamController TeamController;
+        public PlayerController PlayerController;
         //REDIS
         private ConnectionMultiplexer BaseRedis;
-        private readonly IDatabase Base;
+        private IDatabase Base;
         //Dapper
         public SqlConnection Connection { get; set; }
         public DapperController DC;
         public Form1()
         {
             InitializeComponent();
+            InitializeConfigsEF();
+            InitializeConfigsRedis();
+            InitializeConfigsDapper();
+        }
+
+        private void InitializeConfigsEF()
+        {
+            DGV.DataSource = Teams;
+            DGVP.DataSource = Players;
             DbContext = new AppDbContext(ConectionSqlServer);
+            TeamController = new TeamController(DbContext);
+            PlayerController = new PlayerController(DbContext);
+        }
+        private void InitializeConfigsRedis()
+        {
             BaseRedis = ConnectionMultiplexer.Connect("localhost:6379,password=fIbfYgOvdXwHTZCDod5oVy2A1Ih0WRHLvhbLG9QQ");
             Base = BaseRedis.GetDatabase();
+        }
+        private void InitializeConfigsDapper()
+        {
             Connection = new SqlConnection(ConectionSqlServer);
             DC = new DapperController(Connection);
         }
@@ -41,9 +63,6 @@ namespace Respository
                 Name = "Shakhtar Donetsk",
                 Country = "Ukraine"
             };
-            TeamController tc = new TeamController(DbContext);
-            tc.AddTeam(team);
-            tc.AddTeam(team2);
             var player = new Player()
             {
                 TeamId = 1,
@@ -58,9 +77,18 @@ namespace Respository
                 Age = 34,
                 Position = Position.Attack
             };
-            PlayerController pl = new PlayerController(DbContext);
-            pl.AddPlayer(player);
-            pl.AddPlayer(player2);
+            try
+            {
+                TeamController.AddTeam(team);
+                TeamController.AddTeam(team2);
+                PlayerController.AddPlayer(player);
+                PlayerController.AddPlayer(player2);
+                RefreshDgvEF();
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show("Error trying to save players! \n" + er.Message);
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -83,6 +111,7 @@ namespace Respository
         private void btnCreateTableAsync(object sender, EventArgs e)
         {
             DC.CreateTable();
+            RefreshDgvEF();
             MessageBox.Show("Tables created with success!");
         }
 
@@ -90,13 +119,36 @@ namespace Respository
         {
             DC.FillTableTeam();
             DC.FillTablePlayer();
+            RefreshDgvEF();
             MessageBox.Show("Populated tables with success!");
         }        
 
         private void btnDeleteTables_Click(object sender, EventArgs e)
         {
             DC.DropTables();
+            DGV.DataSource = null;
+            DGV.Refresh();
+            DGVP.DataSource = null;
+            DGVP.Refresh();
             MessageBox.Show("Deleted tables with success!");
+        }
+
+        private void RefreshDgvEF()
+        {
+            try
+            {
+                Teams = TeamController.GetAllTeam();
+                DGV.DataSource = Teams;
+                DGV.Refresh();
+                Players = PlayerController.GetAllPlayer();
+                DGVP.DataSource = Players;
+                DGVP.Refresh();
+
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show("Could not find the table! \n"+er.Message);
+            }
         }
     }
 }

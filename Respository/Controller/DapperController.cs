@@ -43,16 +43,23 @@ namespace Respository.Controller
         }
         public async void DropTables()
         {
-            var result = await _connection.ExecuteAsync(Sqls.DropTablePlayerQuery);
-            if (result != -1)
+            if (await CheckTableExist("Player"))
             {
-                throw new ApplicationException("Failed to drop table Player");
+                var result = await _connection.ExecuteAsync(Sqls.DropTablePlayerQuery);
+                if (result != -1)
+                {
+                    throw new ApplicationException("Failed to drop table Player");
+                }
             }
-            result = await _connection.ExecuteAsync(Sqls.DropTableTeamQuery);
-            if (result != -1)
+            if (await CheckTableExist("Team"))
             {
-                throw new ApplicationException("Failed to drop table Team");
+                var result = await _connection.ExecuteAsync(Sqls.DropTableTeamQuery);
+                if (result != -1)
+                {
+                    throw new ApplicationException("Failed to drop table Team");
+                }
             }
+            
         }
         private async Task<bool> CheckTableExist(string Table)
         {

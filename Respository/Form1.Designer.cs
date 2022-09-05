@@ -30,6 +30,9 @@
         {
             this.TabPage = new System.Windows.Forms.TabControl();
             this.tbEf = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.DGVP = new System.Windows.Forms.DataGridView();
+            this.DGV = new System.Windows.Forms.DataGridView();
             this.btnEfInsert = new System.Windows.Forms.Button();
             this.tbRedis = new System.Windows.Forms.TabPage();
             this.button7 = new System.Windows.Forms.Button();
@@ -41,31 +44,68 @@
             this.button6 = new System.Windows.Forms.Button();
             this.TabPage.SuspendLayout();
             this.tbEf.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.tbRedis.SuspendLayout();
             this.tbDapper.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabPage
             // 
+            this.TabPage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TabPage.Controls.Add(this.tbEf);
             this.TabPage.Controls.Add(this.tbRedis);
             this.TabPage.Controls.Add(this.tbDapper);
-            this.TabPage.Location = new System.Drawing.Point(12, 12);
+            this.TabPage.Location = new System.Drawing.Point(-1, 1);
             this.TabPage.Name = "TabPage";
             this.TabPage.SelectedIndex = 0;
-            this.TabPage.Size = new System.Drawing.Size(312, 181);
+            this.TabPage.Size = new System.Drawing.Size(572, 407);
             this.TabPage.TabIndex = 0;
             // 
             // tbEf
             // 
+            this.tbEf.Controls.Add(this.label1);
+            this.tbEf.Controls.Add(this.DGVP);
+            this.tbEf.Controls.Add(this.DGV);
             this.tbEf.Controls.Add(this.btnEfInsert);
             this.tbEf.Location = new System.Drawing.Point(4, 24);
             this.tbEf.Name = "tbEf";
             this.tbEf.Padding = new System.Windows.Forms.Padding(3);
-            this.tbEf.Size = new System.Drawing.Size(304, 153);
+            this.tbEf.Size = new System.Drawing.Size(564, 379);
             this.tbEf.TabIndex = 0;
             this.tbEf.Text = "Entity Framework";
             this.tbEf.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 194);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(79, 15);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "List of Players";
+            // 
+            // DGVP
+            // 
+            this.DGVP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGVP.Location = new System.Drawing.Point(6, 212);
+            this.DGVP.Name = "DGVP";
+            this.DGVP.ReadOnly = true;
+            this.DGVP.RowTemplate.Height = 25;
+            this.DGVP.Size = new System.Drawing.Size(552, 157);
+            this.DGVP.TabIndex = 2;
+            // 
+            // DGV
+            // 
+            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV.Location = new System.Drawing.Point(6, 35);
+            this.DGV.Name = "DGV";
+            this.DGV.ReadOnly = true;
+            this.DGV.RowTemplate.Height = 25;
+            this.DGV.Size = new System.Drawing.Size(552, 157);
+            this.DGV.TabIndex = 1;
             // 
             // btnEfInsert
             // 
@@ -85,7 +125,7 @@
             this.tbRedis.Location = new System.Drawing.Point(4, 24);
             this.tbRedis.Name = "tbRedis";
             this.tbRedis.Padding = new System.Windows.Forms.Padding(3);
-            this.tbRedis.Size = new System.Drawing.Size(304, 153);
+            this.tbRedis.Size = new System.Drawing.Size(564, 379);
             this.tbRedis.TabIndex = 1;
             this.tbRedis.Text = "Redis";
             this.tbRedis.UseVisualStyleBackColor = true;
@@ -128,7 +168,7 @@
             this.tbDapper.Location = new System.Drawing.Point(4, 24);
             this.tbDapper.Name = "tbDapper";
             this.tbDapper.Padding = new System.Windows.Forms.Padding(3);
-            this.tbDapper.Size = new System.Drawing.Size(304, 153);
+            this.tbDapper.Size = new System.Drawing.Size(564, 379);
             this.tbDapper.TabIndex = 2;
             this.tbDapper.Text = "Dapper";
             this.tbDapper.UseVisualStyleBackColor = true;
@@ -168,12 +208,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 201);
+            this.ClientSize = new System.Drawing.Size(568, 406);
             this.Controls.Add(this.TabPage);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TabPage.ResumeLayout(false);
             this.tbEf.ResumeLayout(false);
+            this.tbEf.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.tbRedis.ResumeLayout(false);
             this.tbDapper.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -193,5 +236,8 @@
         private Button button6;
         private Button button7;
         private Button btnPpopularTables;
+        private DataGridView DGV;
+        private Label label1;
+        private DataGridView DGVP;
     }
 }
